@@ -1,5 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import { VisitPage } from '../pages/visit-page';
 
 const firstname = faker.person.firstName();
 const lastname = faker.person.lastName();
@@ -9,12 +10,10 @@ const company = faker.company.name();
 // ***** SUCESSO ******
 
 test('Fazer um registro com sucesso', async ({ page }) => {
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me registrar
-  const linkregistro = page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO preencho os dados
   const gender = page.locator('#gender-female' ).check()
@@ -47,12 +46,10 @@ test('Fazer um registro com sucesso', async ({ page }) => {
 // ***** REQUIRED *****
 
 test('First name não preenchido', async({page}) =>{
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me cadastrar
-  page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO não preencho o First name
   await page.fill('#LastName',lastname)
@@ -70,12 +67,10 @@ test('First name não preenchido', async({page}) =>{
 })
 
 test('Last name não preenchido', async({page}) =>{
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me cadastrar
-  page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO não preencho o Last name
   await page.fill('#FirstName',firstname)
@@ -93,12 +88,10 @@ test('Last name não preenchido', async({page}) =>{
 })
 
 test('Email não preenchido', async({page}) =>{
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me cadastrar
-  page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO não preencho o Email
   await page.fill('#FirstName',firstname)
@@ -116,12 +109,10 @@ test('Email não preenchido', async({page}) =>{
 })
 
 test('Password não preenchido', async({page}) =>{
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me cadastrar
-  page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO não preencho o Password
   await page.fill('#FirstName',firstname)
@@ -142,12 +133,10 @@ test('Password não preenchido', async({page}) =>{
 })
 
 test('Confirm password não preenchido', async({page}) =>{
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me cadastrar
-  page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO não preencho o Confirm password
   await page.fill('#FirstName',firstname)
@@ -167,12 +156,10 @@ test('Confirm password não preenchido', async({page}) =>{
 // ***** OUTRAS VALIDAÇÕES *****
 
 test('Email já cadastrado', async({page}) =>{
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me cadastrar
-  page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO preencho um e-mail já cadastrado
   await page.fill('#FirstName',firstname)
@@ -180,6 +167,7 @@ test('Email já cadastrado', async({page}) =>{
   await page.fill('#Email','juliana@email.com')
   await page.fill('#Password','123456')
   await page.fill('#ConfirmPassword','123456')
+  await page.waitForTimeout(2000)
 
   //E tento confirmar o registro
   page.locator('#register-button').click()
@@ -191,12 +179,10 @@ test('Email já cadastrado', async({page}) =>{
 })
 
 test('Email fora do padrão', async({page}) =>{
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me cadastrar
-  page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO preencho o Email fora do padrão
   await page.fill('#FirstName',firstname)
@@ -215,12 +201,10 @@ test('Email fora do padrão', async({page}) =>{
 })
 
 test('Senha menor que 6 caracteres', async({page}) =>{
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me cadastrar
-  page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO preencho uma senha menor de 6 caracteres
   await page.fill('#FirstName',firstname)
@@ -239,12 +223,10 @@ test('Senha menor que 6 caracteres', async({page}) =>{
 })
 
 test('Confirmação de senha diferente', async({page}) =>{
-  //DADO que acesso a página inicial
-  await page.goto('https://demo.nopcommerce.com/')
-  await expect(page).toHaveTitle(/nopCommerce demo store/)
-
-  //E desejo me cadastrar
-  page.locator('.ico-register').click()
+  const visitPage: VisitPage = new VisitPage(page)
+  
+  //DADO que acesso a página inicial e desejo me registrar
+  visitPage.go()
 
   //QUANDO preencho uma senha menor de 6 caracteres
   await page.fill('#FirstName',firstname)
