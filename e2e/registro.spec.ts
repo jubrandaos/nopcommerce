@@ -217,8 +217,8 @@ test('Senha menor que 6 caracteres', async({page}) =>{
   page.locator('#register-button').click()
 
   //ENTÃO o registro não é realizado e é exibida mensagem de falha
-  const emailmessage = page.locator('span[id=Password-error]')
-  await expect(emailmessage).toBeVisible()
+  const passwordmessage = page.locator('span[id=Password-error]')
+  await expect(passwordmessage).toBeVisible()
   await page.waitForTimeout(1000)
 })
 
@@ -239,7 +239,7 @@ test('Confirmação de senha diferente', async({page}) =>{
   page.locator('#register-button').click()
 
   //ENTÃO o registro não é realizado e é exibida mensagem de falha
-  const emailmessage = page.locator('span[id=ConfirmPassword-error]')
-  await expect(emailmessage).toBeVisible()
+  const passwordmessage = page.locator('span[id=ConfirmPassword-error]')
+  await expect(passwordmessage).toBeVisible()
   await page.waitForTimeout(1000)
 })
